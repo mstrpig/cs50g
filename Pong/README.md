@@ -1,51 +1,51 @@
 # Pong
 
-Небольшая реализация классического Pong на Lua + LÖVE2D.
+A small implementation of the classic Pong game in Lua + LÖVE2D.
 
-## Об игре
+## About the Game
 
-- Игра для двух игроков
-- Классический геймплей
-- До трёх очков
+- Two-player game
+- Classic gameplay
+- First to 3 points wins
 
-## Требования
+## Requirements
 
-- [LÖVE](https://love2d.org/) версии 11.x
+- [LÖVE](https://love2d.org/) version 11.x
 
-## Запуск
+## Running
 
 ### Windows
 
-1. Установите LÖVE 11.x.
-2. Откройте терминал в папке проекта.
-3. Запустите:
+1. Install LÖVE 11.x.
+2. Open a terminal in the project folder.
+3. Run:
 
 ```bash
 love .
 ```
 
-Альтернатива: перетащите папку проекта на `love.exe`.
+Alternative: drag the project folder onto `love.exe`.
 
-## Управление
+## Controls
 
-- Игрок 1: `W` / `S`
-- Игрок 2: `↑` / `↓`
-- Начать / продолжить / рестарт после победы: `Enter`
-- Выход: `Esc`
+- Player 1: `W` / `S`
+- Player 2: `↑` / `↓`
+- Start / continue / restart after win: `Enter`
+- Exit: `Esc`
 
-## Структура проекта
+## Project Structure
 
-- `main.lua` — игровой цикл, состояния, рендер, обработка ввода
-- `constants.lua` — все основные константы
-- `Ball.lua` — мяч: движение, коллизии, рендер
-- `Paddle.lua` — ракетка: движение, рендер
-- `class.lua` — минималистичная система классов
-- `push.lua` — библиотека виртуального разрешения
-- `font.ttf` — шрифт интерфейса
+- `main.lua` — game loop, states, rendering, input handling
+- `constants.lua` — all core constants
+- `Ball.lua` — ball: movement, collisions, rendering
+- `Paddle.lua` — paddle: movement, rendering
+- `class.lua` — minimalist class system
+- `push.lua` — virtual resolution library
+- `font.ttf` — UI font
 
-## Настройка
+## Configuration
 
-Основные параметры для тюнинга находятся в `constants.lua`:
+The main tuning parameters are in `constants.lua`:
 
 - `PADDLE_SPEED`
 - `PADDLE_SPEED_MULTIPLIER`
@@ -54,6 +54,6 @@ love .
 - `WINDOW_WIDTH` / `WINDOW_HEIGHT`
 - `VIRTUAL_WIDTH` / `VIRTUAL_HEIGHT`
 
-## Автор
+## Author
 
 Maria Striletska
