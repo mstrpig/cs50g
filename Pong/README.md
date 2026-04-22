@@ -2,6 +2,8 @@
 
 A small implementation of the classic Pong game in Lua + LÖVE2D.
 
+![Game1 Screenshot](./screenshot.png)
+
 ## About the Game
 
 - Two-player game
