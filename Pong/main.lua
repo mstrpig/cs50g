@@ -26,6 +26,10 @@ function love.load()
     paddle1 = Paddle(5, const.P1_START_Y_POS, 5, const.PADDLE_HEIGHT, {1, 0, 0})
     paddle2 = Paddle(390, const.P2_START_Y_POS, 5, const.PADDLE_HEIGHT, {0, 1, 0})
     ball = Ball(const.BALL_START_X_POS, const.BALL_START_Y_POS, const.BALL_SIZE, const.BALL_SIZE)
+
+    loseSound = love.audio.newSource("/sounds/lose.wav", "static")
+    paddleSound = love.audio.newSource("/sounds/paddle_hit.wav", "static")
+    wallSound = love.audio.newSource("/sounds/wall_hit.wav", "static")
 end
 
 function love.update(dt)
@@ -48,32 +52,38 @@ function love.update(dt)
             ball.dx = -ball.dx * const.PADDLE_SPEED_MULTIPLIER
             ball.x = paddle1.x + const.PADDLE_WIDTH
             ball:randomizeVerticalVelocity()
+            paddleSound:play()
         end
 
         if ball:collides(paddle2) then
             ball.dx = -ball.dx * const.PADDLE_SPEED_MULTIPLIER
             ball.x = paddle2.x - const.BALL_SIZE
             ball:randomizeVerticalVelocity()
+            paddleSound:play()
         end
 
         if ball.y <= 0 then
             ball.dy = -ball.dy
             ball.y = 0
+            wallSound:play()
         end
 
         if ball.y >= const.VIRTUAL_HEIGHT - const.BALL_SIZE then
             ball.dy = -ball.dy
             ball.y = const.VIRTUAL_HEIGHT - const.BALL_SIZE
+            wallSound:play()
         end
 
         if ball.x + const.BALL_SIZE < 0 then
             p2Score = p2Score + 1
             gameState = "serve"
+            loseSound:play()
         end
         
         if ball.x > const.VIRTUAL_WIDTH then
             p1Score = p1Score + 1
             gameState = "serve"
+            loseSound:play()
         end
 
         if p1Score >= const.WIN_SCORE then
