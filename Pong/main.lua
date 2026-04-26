@@ -48,6 +48,7 @@ function love.update(dt)
 
         ball:update(dt)
 
+        -- Ball collision with paddle 1
         if ball:collides(paddle1) then
             ball.dx = -ball.dx * const.PADDLE_SPEED_MULTIPLIER
             ball.x = paddle1.x + const.PADDLE_WIDTH
@@ -55,6 +56,7 @@ function love.update(dt)
             paddleSound:play()
         end
 
+        -- Ball collision with paddle 2
         if ball:collides(paddle2) then
             ball.dx = -ball.dx * const.PADDLE_SPEED_MULTIPLIER
             ball.x = paddle2.x - const.BALL_SIZE
@@ -62,35 +64,41 @@ function love.update(dt)
             paddleSound:play()
         end
 
+        -- Ball collision with top wall
         if ball.y <= 0 then
             ball.dy = -ball.dy
             ball.y = 0
             wallSound:play()
         end
 
+        -- Ball collision with bottom wall
         if ball.y >= const.VIRTUAL_HEIGHT - const.BALL_SIZE then
             ball.dy = -ball.dy
             ball.y = const.VIRTUAL_HEIGHT - const.BALL_SIZE
             wallSound:play()
         end
 
+        -- Check if the ball goes out of bounds on the left side
         if ball.x + const.BALL_SIZE < 0 then
             p2Score = p2Score + 1
             gameState = "serve"
             loseSound:play()
         end
         
+        -- Check if the ball goes out of bounds on the right side
         if ball.x > const.VIRTUAL_WIDTH then
             p1Score = p1Score + 1
             gameState = "serve"
             loseSound:play()
         end
 
+        -- Check for win condition for player 1
         if p1Score >= const.WIN_SCORE then
             gameState = "win"
             winner = "Player 1"
         end
 
+        -- Check for win condition for player 2
         if p2Score >= const.WIN_SCORE then
             gameState = "win"
             winner = "Player 2"
