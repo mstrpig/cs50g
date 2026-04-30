@@ -13,6 +13,10 @@ function love.load()
         resizable = false,
         vsync = true
     })
+
+    background = love.graphics.newImage("/assets/bg/bg01.png")
+    mountainsBlue = love.graphics.newImage("/assets/bg/bg02.png")
+    mountainsGray = love.graphics.newImage("/assets/bg/bg03.png")
 end
 
 function love.update(dt)
@@ -21,7 +25,9 @@ end
 
 function love.draw()
     push:apply("start")
-
+    love.graphics.draw(background, 0, const.BG_X_OFFSET)
+    love.graphics.draw(mountainsBlue, 0, const.BG_X_OFFSET)
+    love.graphics.draw(mountainsGray, 0, const.BG_X_OFFSET)
     push:apply("end")
 end
 
