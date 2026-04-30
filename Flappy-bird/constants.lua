@@ -2,10 +2,10 @@ local constants = {
     WINDOW_WIDTH = 1024,
     WINDOW_HEIGHT = 768,
 
-    VIRTUAL_WIDTH = 400,
-    VIRTUAL_HEIGHT = 300,
+    VIRTUAL_WIDTH = 640,
+    VIRTUAL_HEIGHT = 480,
 
-    BG_X_OFFSET = -165
+    BG_Y_OFFSET = -100
 }
 
 return constants

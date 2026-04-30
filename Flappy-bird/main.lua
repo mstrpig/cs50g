@@ -3,6 +3,9 @@ Class = require "class"
 
 local const = require "constants"
 
+local mountainsBlueX = 0
+local mountainsGrayX = 0
+
 function love.load()
     love.window.setTitle("Flappy Bird")
 
@@ -20,14 +23,15 @@ function love.load()
 end
 
 function love.update(dt)
-
+    mountainsBlueX = (mountainsBlueX + 30 * dt) % background:getWidth()
+    mountainsGrayX = (mountainsGrayX + 60 * dt) % background:getWidth()
 end
 
 function love.draw()
     push:apply("start")
-    love.graphics.draw(background, 0, const.BG_X_OFFSET)
-    love.graphics.draw(mountainsBlue, 0, const.BG_X_OFFSET)
-    love.graphics.draw(mountainsGray, 0, const.BG_X_OFFSET)
+    love.graphics.draw(background, 0, const.BG_Y_OFFSET)
+    love.graphics.draw(mountainsBlue, -mountainsBlueX, const.BG_Y_OFFSET)
+    love.graphics.draw(mountainsGray, -mountainsGrayX, const.BG_Y_OFFSET)
     push:apply("end")
 end
 
