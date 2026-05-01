@@ -5,7 +5,9 @@ local constants = {
     VIRTUAL_WIDTH = 640,
     VIRTUAL_HEIGHT = 480,
 
-    BG_Y_OFFSET = -100
+    BG_Y_OFFSET = -100,
+
+    GRAVITY = 200
 }
 
 return constants
