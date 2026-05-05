@@ -39,5 +39,5 @@ function Bird:update(dt)
 end
 
 function Bird:render()
-    love.graphics.draw(self.frames[frameIndex], self.x, self.y)
+    love.graphics.draw(self.frames[frameIndex], self.x, self.y, 0, 1.5, 1.5)
 end
