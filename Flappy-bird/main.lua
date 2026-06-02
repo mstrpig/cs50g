@@ -9,14 +9,16 @@ local const = require "constants"
 local mountainsBlueX = 0
 local mountainsGrayX = 0
 
-local pipes = {}
+local upperPipes = {}
+local lowerPipes = {}
 local pipeSpawnTimer = 0
 
 function love.load()
+    math.randomseed(os.clock())
     love.window.setTitle("Flappy Bird")
 
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    
+
     push:setupScreen(const.VIRTUAL_WIDTH, const.VIRTUAL_HEIGHT, const.WINDOW_WIDTH, const.WINDOW_HEIGHT, {
         fullscreen = false,
         resizable = false,
@@ -27,7 +29,8 @@ function love.load()
     mountainsBlue = love.graphics.newImage("assets/bg/bg02.png")
     mountainsGray = love.graphics.newImage("assets/bg/bg03.png")
     bird = Bird()
-    table.insert(pipes, Pipe())
+    table.insert(upperPipes, Pipe())
+    table.insert(lowerPipes, Pipe())
 end
 
 function love.update(dt)
@@ -38,14 +41,26 @@ function love.update(dt)
     pipeSpawnTimer = pipeSpawnTimer + dt
     if pipeSpawnTimer >= 3 then
         pipeSpawnTimer = pipeSpawnTimer % 3
-        table.insert(pipes, Pipe())
+        local y = math.random(150, const.VIRTUAL_HEIGHT - 50)
+        table.insert(upperPipes, Pipe(y - 100, true))
+        table.insert(lowerPipes, Pipe(y, false))
     end
 
-    for k, pipe in pairs(pipes) do
+    -- Update upper pipes position and delete pipe when off-screen
+    for k, pipe in pairs(upperPipes) do
         pipe:update(dt)
-        
+
         if pipe.x + pipe.width * 1.5 < 0 then
-            table.remove(pipes, k)
+            table.remove(upperPipes, k)
+        end
+    end
+
+    -- Update lower pipes position and delete pipe when off-screen
+    for k, pipe in pairs(lowerPipes) do
+        pipe:update(dt)
+
+        if pipe.x + pipe.width * 1.5 < 0 then
+            table.remove(lowerPipes, k)
         end
     end
 end
@@ -57,7 +72,11 @@ function love.draw()
     love.graphics.draw(mountainsGray, -mountainsGrayX, const.BG_Y_OFFSET)
     bird:render()
 
-    for _, pipe in pairs(pipes) do
+    for _, pipe in pairs(upperPipes) do
+        pipe:render()
+    end
+
+    for _, pipe in pairs(lowerPipes) do
         pipe:render()
     end
 

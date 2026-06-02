@@ -1,15 +1,23 @@
-Pipe = Class{}
+Pipe = Class {}
 
 local const = require "constants"
 
-function Pipe:init()
+local scaleX = 1.5
+
+function Pipe:init(y, inverted)
     self.image = love.graphics.newImage("assets/pipe.png")
 
     self.width = self.image:getWidth()
     self.height = self.image:getHeight()
 
     self.x = const.VIRTUAL_WIDTH
-    self.y = 240
+    self.y = y
+
+    self.scaleY = 1.5
+
+    if inverted then
+        self.scaleY = -self.scaleY
+    end
 end
 
 function Pipe:update(dt)
@@ -17,5 +25,5 @@ function Pipe:update(dt)
 end
 
 function Pipe:render()
-    love.graphics.draw(self.image, self.x, self.y, 0, 1.5, 1.5)
+    love.graphics.draw(self.image, self.x, self.y, 0, scaleX, self.scaleY)
 end
