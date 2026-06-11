@@ -29,8 +29,10 @@ function love.load()
     mountainsBlue = love.graphics.newImage("assets/bg/bg02.png")
     mountainsGray = love.graphics.newImage("assets/bg/bg03.png")
     bird = Bird()
-    table.insert(upperPipes, Pipe())
-    table.insert(lowerPipes, Pipe())
+
+    local y = math.random(150, const.VIRTUAL_HEIGHT - 50)
+    table.insert(upperPipes, Pipe(y - 110, true))
+    table.insert(lowerPipes, Pipe(y, false))
 end
 
 function love.update(dt)
@@ -39,10 +41,10 @@ function love.update(dt)
     bird:update(dt)
 
     pipeSpawnTimer = pipeSpawnTimer + dt
-    if pipeSpawnTimer >= 3 then
-        pipeSpawnTimer = pipeSpawnTimer % 3
+    if pipeSpawnTimer >= 3.5 then
+        pipeSpawnTimer = pipeSpawnTimer % 3.5
         local y = math.random(150, const.VIRTUAL_HEIGHT - 50)
-        table.insert(upperPipes, Pipe(y - 100, true))
+        table.insert(upperPipes, Pipe(y - 110, true))
         table.insert(lowerPipes, Pipe(y, false))
     end
 
@@ -61,6 +63,18 @@ function love.update(dt)
 
         if pipe.x + pipe.width * 1.5 < 0 then
             table.remove(lowerPipes, k)
+        end
+    end
+
+    for _, pipe in pairs(upperPipes) do
+        if bird:collidesWithUpperPipe(pipe) then
+            love.event.quit()
+        end
+    end
+
+    for _, pipe in pairs(lowerPipes) do
+        if bird:collidesWithLowerPipe(pipe) then
+            love.event.quit()
         end
     end
 end
@@ -89,6 +103,6 @@ function love.keypressed(key)
     end
 
     if key == "space" then
-        bird.dy = -150
+        bird.dy = -180
     end
 end

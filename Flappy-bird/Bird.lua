@@ -1,4 +1,4 @@
-Bird = Class{}
+Bird = Class {}
 
 local const = require "constants"
 
@@ -40,4 +40,24 @@ end
 
 function Bird:render()
     love.graphics.draw(self.frames[frameIndex], self.x, self.y, 0, 1.5, 1.5)
+end
+
+function Bird:collidesWithLowerPipe(pipe)
+    local obstaclePassed = self.x > pipe.x + pipe.width
+    if obstaclePassed then
+        return false
+    end
+
+    local collided = self.x + self.width >= pipe.x and self.y + self.height >= pipe.y
+    return collided
+end
+
+function Bird:collidesWithUpperPipe(pipe)
+    local obstaclePassed = self.x > pipe.x + pipe.width
+    if obstaclePassed then
+        return false
+    end
+
+    local collided = self.x + self.width >= pipe.x and self.y + self.height <= pipe.y
+    return collided
 end

@@ -7,7 +7,7 @@ local constants = {
 
     BG_Y_OFFSET = -100,
 
-    GRAVITY = 200
+    GRAVITY = 350
 }
 
 return constants
