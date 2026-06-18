@@ -27,6 +27,10 @@ function Bird:update(dt)
     self.dy = self.dy + const.GRAVITY * dt
     self.y = self.y + self.dy * dt
 
+    if love.keyboard.wasPressed('space') then
+        self.dy = -180
+    end
+
     timer = timer + dt
     if timer > interval then
         timer = timer % interval
