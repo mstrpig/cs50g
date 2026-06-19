@@ -8,37 +8,22 @@ function TitleScreenState:update(dt)
 end
 
 function TitleScreenState:render()
-    local font = 'assets/font.ttf'
-    local largeFont = love.graphics.newFont(font, 40)
-    love.graphics.setFont(largeFont)
-    local nameText = "Flappy Bird"
-    local nameTextWidth = largeFont:getWidth(nameText)
-    local textX = const.VIRTUAL_WIDTH/2 - nameTextWidth/2
-    local textY = const.VIRTUAL_HEIGHT/2
-    love.graphics.setColor(0, 0, 0, 0.5)
-    love.graphics.print(nameText, const.VIRTUAL_WIDTH/2 - nameTextWidth/2 + 3, const.VIRTUAL_HEIGHT/4 + 3)
-    love.graphics.setColor(1, 0.84, 0)
-    love.graphics.print(nameText, const.VIRTUAL_WIDTH/2 - nameTextWidth/2, const.VIRTUAL_HEIGHT/4)
+    local function drawText(text, fontSize, y, textColor)
+        local font = 'assets/font.ttf'
+        local textFont = love.graphics.newFont(font, fontSize)
+        love.graphics.setFont(textFont)
+        local textWidth = textFont:getWidth(text)
+        local textX = const.VIRTUAL_WIDTH / 2 - textWidth / 2
+        local textY = const.VIRTUAL_HEIGHT / 2
+        love.graphics.setColor(0, 0, 0, 0.5)
+        love.graphics.print(text, const.VIRTUAL_WIDTH / 2 - textWidth / 2 + 3, y + 3)
+        love.graphics.setColor(textColor)
+        love.graphics.print(text, const.VIRTUAL_WIDTH / 2 - textWidth / 2, y)
+    end
 
-    local middleFont = love.graphics.newFont(font, 30)
-    love.graphics.setFont(middleFont)
-    local nameText = "Press 'Enter' to start"
-    local nameTextWidth = middleFont:getWidth(nameText)
-    local textX = const.VIRTUAL_WIDTH/2 - nameTextWidth/2
-    local textY = const.VIRTUAL_HEIGHT/2
-    love.graphics.setColor(0, 0, 0, 0.5)
-    love.graphics.print(nameText, const.VIRTUAL_WIDTH/2 - nameTextWidth/2 + 3, const.VIRTUAL_HEIGHT/2 + 3)
-    love.graphics.setColor(1, 0.65, 0)
-    love.graphics.print(nameText, const.VIRTUAL_WIDTH/2 - nameTextWidth/2, const.VIRTUAL_HEIGHT/2)
-
-    local smallFont = love.graphics.newFont(font, 20)
-    love.graphics.setFont(smallFont)
-    local nameText = "By Maria Striletska"
-    local nameTextWidth = smallFont:getWidth(nameText)
-    local textX = const.VIRTUAL_WIDTH/2 - nameTextWidth/2
-    local textY = const.VIRTUAL_HEIGHT/2
-    love.graphics.setColor(0, 0, 0, 0.5)
-    love.graphics.print(nameText, const.VIRTUAL_WIDTH/2 - nameTextWidth/2 + 3, const.VIRTUAL_HEIGHT/1.5 + 3)
-    love.graphics.setColor(1, 0.65, 0)
-    love.graphics.print(nameText, const.VIRTUAL_WIDTH/2 - nameTextWidth/2, const.VIRTUAL_HEIGHT/1.5) 
+    local yellow = {1, 0.84, 0}
+    local orange = {1, 0.65, 0}
+    drawText("Flappy Bird", 40, const.VIRTUAL_HEIGHT / 4, yellow)
+    drawText("Press 'Enter' to start", 30, const.VIRTUAL_HEIGHT / 2, orange)
+    drawText("By Maria Striletska", 20, const.VIRTUAL_HEIGHT / 1.5, orange)
 end
