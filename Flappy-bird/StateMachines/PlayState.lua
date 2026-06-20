@@ -15,44 +15,14 @@ function PlayState:init()
 end
 
 function PlayState:update(dt)
-    self.mountainsBlueX = (self.mountainsBlueX + 30 * dt) % background:getWidth()
-    self.mountainsGrayX = (self.mountainsGrayX + 45 * dt) % background:getWidth()
+    self:updateBackgroundXPos(dt)
     self.bird:update(dt)
 
-    self.pipeSpawnTimer = self.pipeSpawnTimer + dt
-    if self.pipeSpawnTimer >= 3.5 then
-        self.pipeSpawnTimer = self.pipeSpawnTimer % 3.5
-        self:generatePipePair()
-    end
+    self:spawnPipePair(dt, 3.5)
 
-    for k, pipe in pairs(self.upperPipes) do
-        pipe:update(dt)
+    self:moveAndCleanPipes(dt)
 
-        if pipe.x + pipe.width * 1.5 < 0 then
-            table.remove(self.upperPipes, k)
-        end
-    end
-
-    -- Update lower pipes position and delete pipe when off-screen
-    for k, pipe in pairs(self.lowerPipes) do
-        pipe:update(dt)
-
-        if pipe.x + pipe.width * 1.5 < 0 then
-            table.remove(self.lowerPipes, k)
-        end
-    end
-
-    for _, pipe in pairs(self.upperPipes) do
-        if self.bird:collidesWithUpperPipe(pipe) then
-            love.event.quit()
-        end
-    end
-
-    for _, pipe in pairs(self.lowerPipes) do
-        if self.bird:collidesWithLowerPipe(pipe) then
-            love.event.quit()
-        end
-    end
+    self:collisionWithPipes()
 end
 
 function PlayState:render()
@@ -76,4 +46,50 @@ function PlayState:generatePipePair()
     local y = math.random(150, const.VIRTUAL_HEIGHT - 50)
     table.insert(self.upperPipes, Pipe(y - 110, true))
     table.insert(self.lowerPipes, Pipe(y, false))
+end
+
+function PlayState:updateBackgroundXPos(dt)
+    self.mountainsBlueX = (self.mountainsBlueX + 30 * dt) % background:getWidth()
+    self.mountainsGrayX = (self.mountainsGrayX + 45 * dt) % background:getWidth()
+end
+
+function PlayState:spawnPipePair(dt, spawnInterval)
+    self.pipeSpawnTimer = self.pipeSpawnTimer + dt
+    if self.pipeSpawnTimer >= spawnInterval then
+        self.pipeSpawnTimer = self.pipeSpawnTimer % spawnInterval
+        self:generatePipePair()
+    end
+end
+
+function PlayState:moveAndCleanPipes(dt)
+    for k, pipe in pairs(self.upperPipes) do
+        pipe:update(dt)
+
+        if pipe.x + pipe.width * 1.5 < 0 then
+            table.remove(self.upperPipes, k)
+        end
+    end
+
+    -- Update lower pipes position and delete pipe when off-screen
+    for k, pipe in pairs(self.lowerPipes) do
+        pipe:update(dt)
+
+        if pipe.x + pipe.width * 1.5 < 0 then
+            table.remove(self.lowerPipes, k)
+        end
+    end
+end
+
+function PlayState:collisionWithPipes()
+    for _, pipe in pairs(self.upperPipes) do
+        if self.bird:collidesWithUpperPipe(pipe) then
+            love.event.quit()
+        end
+    end
+
+    for _, pipe in pairs(self.lowerPipes) do
+        if self.bird:collidesWithLowerPipe(pipe) then
+            love.event.quit()
+        end
+    end
 end
