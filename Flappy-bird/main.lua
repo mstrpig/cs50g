@@ -37,7 +37,6 @@ function love.load()
 end
 
 function love.update(dt)
-
     gStateMachine:update(dt)
     love.keyboard.keysPressed = {}
 end
@@ -48,9 +47,7 @@ end
 
 function love.draw()
     push:apply("start")
-    love.graphics.draw(background, 0, const.BG_Y_OFFSET)
-    love.graphics.draw(mountainsBlue, 0, const.BG_Y_OFFSET)
-    love.graphics.draw(mountainsGray, 0, const.BG_Y_OFFSET)
+
     gStateMachine:render()
 
     push:apply("end")

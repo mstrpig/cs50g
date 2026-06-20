@@ -8,6 +8,10 @@ function TitleScreenState:update(dt)
 end
 
 function TitleScreenState:render()
+    love.graphics.draw(background, 0, const.BG_Y_OFFSET)
+    love.graphics.draw(mountainsBlue, 0, const.BG_Y_OFFSET)
+    love.graphics.draw(mountainsGray, 0, const.BG_Y_OFFSET)
+    
     local function drawText(text, fontSize, y, textColor)
         local font = 'assets/font.ttf'
         local textFont = love.graphics.newFont(font, fontSize)
@@ -26,4 +30,5 @@ function TitleScreenState:render()
     drawText("Flappy Bird", 40, const.VIRTUAL_HEIGHT / 4, yellow)
     drawText("Press 'Enter' to start", 30, const.VIRTUAL_HEIGHT / 2, orange)
     drawText("By Maria Striletska", 20, const.VIRTUAL_HEIGHT / 1.5, orange)
+
 end

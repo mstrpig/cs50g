@@ -6,7 +6,7 @@ function PlayState:init()
     self.bird = Bird()
     self.upperPipes = {}
     self.lowerPipes = {}
-    self.pipeSpawnTimer = 0
+    self.pipeSpawnTimer = 3.5
     self.mountainsBlueX = 0
     self.mountainsGrayX = 0
     self.score = 0
@@ -57,6 +57,10 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    love.graphics.draw(background, 0, const.BG_Y_OFFSET)
+    love.graphics.draw(mountainsBlue, -self.mountainsBlueX, const.BG_Y_OFFSET)
+    love.graphics.draw(mountainsGray, -self.mountainsGrayX, const.BG_Y_OFFSET)
+    
     self.bird:render()
 
     for _, pipe in pairs(self.upperPipes) do
