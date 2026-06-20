@@ -6,11 +6,12 @@ function PlayState:init()
     self.bird = Bird()
     self.upperPipes = {}
     self.lowerPipes = {}
-    self.pipeSpawnTimer = 3.5
+    self.pipeSpawnTimer = 0
     self.mountainsBlueX = 0
     self.mountainsGrayX = 0
     self.score = 0
     self.lastY = 0
+    self:generatePipePair()
 end
 
 function PlayState:update(dt)
@@ -21,9 +22,7 @@ function PlayState:update(dt)
     self.pipeSpawnTimer = self.pipeSpawnTimer + dt
     if self.pipeSpawnTimer >= 3.5 then
         self.pipeSpawnTimer = self.pipeSpawnTimer % 3.5
-        local y = math.random(150, const.VIRTUAL_HEIGHT - 50)
-        table.insert(self.upperPipes, Pipe(y - 110, true))
-        table.insert(self.lowerPipes, Pipe(y, false))
+        self:generatePipePair()
     end
 
     for k, pipe in pairs(self.upperPipes) do
@@ -71,4 +70,10 @@ function PlayState:render()
         pipe:render()
     end
 
+end
+
+function PlayState:generatePipePair()
+    local y = math.random(150, const.VIRTUAL_HEIGHT - 50)
+    table.insert(self.upperPipes, Pipe(y - 110, true))
+    table.insert(self.lowerPipes, Pipe(y, false))
 end
