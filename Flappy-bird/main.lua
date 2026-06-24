@@ -8,6 +8,7 @@ require "StateMachine"
 require "StateMachines.BaseState"
 require "StateMachines.TitleScreenState"
 require "StateMachines.PlayState"
+require "StateMachines.ScoreState"
 
 local const = require "constants"
 
@@ -27,7 +28,8 @@ function love.load()
 
     gStateMachine = StateMachine{
         ['title'] = function() return TitleScreenState() end,
-        ['play'] = function() return PlayState() end
+        ['play'] = function() return PlayState() end,
+        ['score'] = function() return ScoreState() end
     }
     gStateMachine:change('title')
 

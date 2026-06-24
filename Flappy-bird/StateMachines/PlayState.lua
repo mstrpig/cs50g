@@ -23,6 +23,8 @@ function PlayState:update(dt)
     self:moveAndCleanPipes(dt)
 
     self:collisionWithPipes()
+
+    self:checkIfScored(dt)
 end
 
 function PlayState:render()
@@ -40,6 +42,7 @@ function PlayState:render()
         pipe:render()
     end
 
+    self:scoreRender()
 end
 
 function PlayState:generatePipePair()
@@ -83,13 +86,27 @@ end
 function PlayState:collisionWithPipes()
     for _, pipe in pairs(self.upperPipes) do
         if self.bird:collidesWithUpperPipe(pipe) then
-            love.event.quit()
+            gStateMachine:change('score', self.score)
         end
     end
 
     for _, pipe in pairs(self.lowerPipes) do
         if self.bird:collidesWithLowerPipe(pipe) then
-            love.event.quit()
+            gStateMachine:change('score', self.score)
         end
     end
+end
+
+function PlayState:checkIfScored(dt)
+    for k, pipe in pairs(self.upperPipes) do
+        local obstaclePassed = self.bird.x > pipe.x + pipe.width
+        if obstaclePassed and not pipe.isScored then
+            pipe.isScored = true
+            self.score = self.score + 1
+        end
+    end
+end
+
+function PlayState:scoreRender()
+    drawText("Score: " .. self.score, 20, const.VIRTUAL_WIDTH / 6, const.VIRTUAL_HEIGHT / 6, orange)
 end

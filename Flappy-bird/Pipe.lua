@@ -15,6 +15,8 @@ function Pipe:init(y, inverted)
 
     self.scaleY = 1.5
 
+    self.isScored = false
+
     if inverted then
         self.scaleY = -self.scaleY
     end
