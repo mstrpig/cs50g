@@ -33,7 +33,17 @@ function love.load()
         ['play'] = function() return PlayState() end,
         ['score'] = function() return ScoreState() end
     }
+
+    gSounds = {
+        ['jump'] = love.audio.newSource("Sounds/jumpSound2.wav", "static"),
+        ['lose'] = love.audio.newSource("Sounds/loseSound.wav", "static"),
+        ['background'] = love.audio.newSource("Sounds/background.wav", "static")
+    }
+    
     gStateMachine:change('title')
+
+    gSounds['background']:setLooping(true)
+    gSounds['background']:play()
 
     background = love.graphics.newImage("assets/bg/bg01.png")
     mountainsBlue = love.graphics.newImage("assets/bg/bg02.png")

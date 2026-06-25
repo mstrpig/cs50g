@@ -25,5 +25,5 @@ function CountDownState:render()
     love.graphics.draw(mountainsBlue, 0, const.BG_Y_OFFSET)
     love.graphics.draw(mountainsGray, 0, const.BG_Y_OFFSET)
     
-    drawText(self.count, 40, const.VIRTUAL_WIDTH / 2, const.VIRTUAL_HEIGHT / 3, orange)
+    drawText(self.count, 60, const.VIRTUAL_WIDTH / 2, const.VIRTUAL_HEIGHT / 3, orange)
 end

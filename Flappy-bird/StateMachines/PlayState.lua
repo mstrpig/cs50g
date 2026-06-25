@@ -86,12 +86,14 @@ end
 function PlayState:collisionWithPipes()
     for _, pipe in pairs(self.upperPipes) do
         if self.bird:collidesWithUpperPipe(pipe) then
+            gSounds['lose']:play()
             gStateMachine:change('score', self.score)
         end
     end
 
     for _, pipe in pairs(self.lowerPipes) do
         if self.bird:collidesWithLowerPipe(pipe) then
+            gSounds['lose']:play()
             gStateMachine:change('score', self.score)
         end
     end
