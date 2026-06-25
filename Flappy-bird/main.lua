@@ -9,6 +9,7 @@ require "StateMachines.BaseState"
 require "StateMachines.TitleScreenState"
 require "StateMachines.PlayState"
 require "StateMachines.ScoreState"
+require "StateMachines.CountDownState"
 
 local const = require "constants"
 
@@ -28,6 +29,7 @@ function love.load()
 
     gStateMachine = StateMachine{
         ['title'] = function() return TitleScreenState() end,
+        ['count'] = function() return CountDownState() end,
         ['play'] = function() return PlayState() end,
         ['score'] = function() return ScoreState() end
     }

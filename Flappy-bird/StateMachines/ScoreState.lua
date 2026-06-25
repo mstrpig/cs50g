@@ -4,7 +4,7 @@ const = require 'constants'
 
 function ScoreState:update()
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('play')
+        gStateMachine:change('count')
     end
 end
 

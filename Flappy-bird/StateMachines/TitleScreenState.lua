@@ -3,7 +3,7 @@ local const = require "constants"
 
 function TitleScreenState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('play')
+        gStateMachine:change('count')
     end
 end
 
