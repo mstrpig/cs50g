@@ -21,13 +21,18 @@ function Bird:init()
     self.y = const.VIRTUAL_HEIGHT / 2 - self.height / 2
 
     self.dy = 0
+
+    self.mouseIsDown = false
 end
 
 function Bird:update(dt)
     self.dy = self.dy + const.GRAVITY * dt
     self.y = self.y + self.dy * dt
 
-    if love.keyboard.wasPressed('space') then
+    local mousePressed = love.mouse.isDown(1) and not self.wasMouseDown
+    self.wasMouseDown = love.mouse.isDown(1)
+
+    if love.keyboard.wasPressed('space') or mousePressed then
         gSounds['jump']:play()
         self.dy = -180
     end
