@@ -5,6 +5,8 @@ local const = require "constants"
 local frameIndex = 1
 local timer = 0
 local interval = 0.1
+local scaleX = 1.5
+local scaleY = 1.5
 
 function Bird:init()
     self.frames = {
@@ -58,7 +60,7 @@ function Bird:collidesWithLowerPipe(pipe)
         return false
     end
 
-    local collided = self.x + self.width >= pipe.x and self.y + self.height >= pipe.y
+    local collided = self.x + self.width * scaleX >= pipe.x and self.y + self.height * scaleY >= pipe.y
     return collided
 end
 
@@ -68,6 +70,6 @@ function Bird:collidesWithUpperPipe(pipe)
         return false
     end
 
-    local collided = self.x + self.width >= pipe.x and self.y + self.height <= pipe.y
+    local collided = self.x + self.width * scaleX >= pipe.x and self.y + self.height * scaleY <= pipe.y
     return collided
 end
