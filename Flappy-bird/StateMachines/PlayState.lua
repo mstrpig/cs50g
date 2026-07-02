@@ -25,6 +25,8 @@ function PlayState:update(dt)
     self:collisionWithPipes()
 
     self:checkIfScored(dt)
+
+    self:collisionWithScreenBorders()
 end
 
 function PlayState:render()
@@ -87,7 +89,7 @@ function PlayState:collisionWithPipes()
     for _, pipe in pairs(self.upperPipes) do
         if self.bird:collidesWithUpperPipe(pipe) then
             gSounds['lose']:play()
-            gStateMachine:change('score', self.score)
+            gStateMachine:change('score', self.score) 
         end
     end
 
@@ -111,4 +113,11 @@ end
 
 function PlayState:scoreRender()
     drawText("Score: " .. self.score, 20, const.VIRTUAL_WIDTH / 6, const.VIRTUAL_HEIGHT / 6, orange)
+end
+
+function PlayState:collisionWithScreenBorders()
+    if self.bird.y <= 0 or self.bird.y + self.bird.height >= const.VIRTUAL_HEIGHT then
+        gSounds['lose']:play()
+        gStateMachine:change('score', self.score)
+    end
 end
