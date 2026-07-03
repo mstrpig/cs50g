@@ -18,7 +18,7 @@ function PlayState:update(dt)
     self:updateBackgroundXPos(dt)
     self.bird:update(dt)
 
-    self:spawnPipePair(dt, 3.5)
+    self:spawnPipePair(dt, 2.3)
 
     self:moveAndCleanPipes(dt)
 

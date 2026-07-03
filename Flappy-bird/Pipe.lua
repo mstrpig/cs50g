@@ -23,7 +23,7 @@ function Pipe:init(y, inverted)
 end
 
 function Pipe:update(dt)
-    self.x = self.x - 60 * dt
+    self.x = self.x - 90 * dt
 end
 
 function Pipe:render()
