@@ -55,21 +55,27 @@ function Bird:render()
 end
 
 function Bird:collidesWithLowerPipe(pipe)
-    local obstaclePassed = self.x > pipe.x + pipe.width
-    if obstaclePassed then
+    if self.x > pipe.x + pipe.width * scaleX then
         return false
     end
 
-    local collided = self.x + self.width * scaleX >= pipe.x and self.y + self.height * scaleY >= pipe.y
-    return collided
+    local birdRight = self.x + self.width * scaleX
+    local pipeRight = pipe.x + pipe.width * scaleX
+
+    local horizontal = birdRight >= pipe.x and self.x <= pipeRight
+
+    return horizontal and self.y + self.height * scaleY >= pipe.y
 end
 
 function Bird:collidesWithUpperPipe(pipe)
-    local obstaclePassed = self.x > pipe.x + pipe.width
-    if obstaclePassed then
+    if self.x > pipe.x + pipe.width * scaleX then
         return false
     end
 
-    local collided = self.x + self.width * scaleX >= pipe.x and self.y + self.height * scaleY <= pipe.y
-    return collided
+    local birdRight = self.x + self.width * scaleX
+    local pipeRight = pipe.x + pipe.width * scaleX
+
+    local horizontal = birdRight >= pipe.x and self.x <= pipeRight
+
+    return horizontal and self.y <= pipe.y
 end
