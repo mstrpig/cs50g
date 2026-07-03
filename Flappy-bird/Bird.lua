@@ -36,7 +36,7 @@ function Bird:update(dt)
 
     if love.keyboard.wasPressed('space') or mousePressed then
         gSounds['jump']:play()
-        self.dy = -180
+        self.dy = -350
     end
 
     timer = timer + dt
