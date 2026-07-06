@@ -11,6 +11,7 @@ function PlayState:init()
     self.mountainsGrayX = 0
     self.score = 0
     self.lastY = 0
+    self.isCollisionDetected = false
     self:generatePipePair()
 end
 
@@ -27,6 +28,11 @@ function PlayState:update(dt)
     self:checkIfScored(dt)
 
     self:collisionWithScreenBorders()
+
+    if self.isCollisionDetected == true then
+        love.timer.sleep(1)
+        gStateMachine:change('score', self.score)
+    end
 end
 
 function PlayState:render()
@@ -89,14 +95,14 @@ function PlayState:collisionWithPipes()
     for _, pipe in pairs(self.upperPipes) do
         if self.bird:collidesWithUpperPipe(pipe) then
             gSounds['lose']:play()
-            gStateMachine:change('score', self.score) 
+            self.isCollisionDetected = true 
         end
     end
 
     for _, pipe in pairs(self.lowerPipes) do
         if self.bird:collidesWithLowerPipe(pipe) then
             gSounds['lose']:play()
-            gStateMachine:change('score', self.score)
+            self.isCollisionDetected = true
         end
     end
 end
