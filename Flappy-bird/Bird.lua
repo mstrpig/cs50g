@@ -59,12 +59,12 @@ function Bird:collidesWithLowerPipe(pipe)
         return false
     end
 
-    local birdRight = self.x + self.width * scaleX
+    local birdRight = self.x + (self.width - 3) * scaleX
     local pipeRight = pipe.x + pipe.width * scaleX
 
     local horizontal = birdRight >= pipe.x and self.x <= pipeRight
 
-    return horizontal and self.y + self.height * scaleY >= pipe.y
+    return horizontal and self.y + (self.height - 3) * scaleY >= pipe.y
 end
 
 function Bird:collidesWithUpperPipe(pipe)
@@ -72,10 +72,10 @@ function Bird:collidesWithUpperPipe(pipe)
         return false
     end
 
-    local birdRight = self.x + self.width * scaleX
+    local birdRight = self.x + (self.width + 3) * scaleX
     local pipeRight = pipe.x + pipe.width * scaleX
 
     local horizontal = birdRight >= pipe.x and self.x <= pipeRight
 
-    return horizontal and self.y <= pipe.y
+    return horizontal and self.y + 3 <= pipe.y
 end
