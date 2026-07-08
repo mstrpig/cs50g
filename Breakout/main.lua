@@ -5,7 +5,9 @@ const = require 'constants'
 require 'StateMachine'
 require 'StateMachines/BaseState'
 require 'StateMachines/TitleScreenState'
-require 'StateMAchines/PlayState'
+require 'StateMachines/PlayState'
+
+require 'Paddle'
 
 function love.load()
     math.randomseed(os.clock())

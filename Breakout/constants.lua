@@ -3,7 +3,9 @@ local constants = {
     WINDOW_HEIGHT = 768,
 
     VIRTUAL_WIDTH = 640,
-    VIRTUAL_HEIGHT = 480
+    VIRTUAL_HEIGHT = 480,
+
+    PADDLE_SPEED = 250
 }
 
 return constants
