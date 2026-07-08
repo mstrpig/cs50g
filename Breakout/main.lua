@@ -5,6 +5,7 @@ const = require 'constants'
 require 'StateMachine'
 require 'StateMachines/BaseState'
 require 'StateMachines/TitleScreenState'
+require 'StateMAchines/PlayState'
 
 function love.load()
     math.randomseed(os.clock())
@@ -21,7 +22,8 @@ function love.load()
     love.keyboard.keysPressed = {}
 
     gStateMachine = StateMachine{
-        ['title'] = function() return TitleScreenState() end
+        ['title'] = function() return TitleScreenState() end,
+        ['play'] = function() return PlayState() end
     }
 
     gStateMachine:change('title')

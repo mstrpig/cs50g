@@ -8,6 +8,10 @@ function TitleScreenState:update(dt)
     elseif love.keyboard.wasPressed('down') then
         highlighted = 2
     end
+
+    if highlighted == 1 and love.keyboard.wasPressed('return') then
+        gStateMachine:change('play')
+    end
 end
 
 function TitleScreenState:render()
