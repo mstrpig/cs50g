@@ -8,6 +8,7 @@ require 'StateMachines/TitleScreenState'
 require 'StateMachines/PlayState'
 
 require 'Paddle'
+require 'Ball'
 
 function love.load()
     math.randomseed(os.clock())
