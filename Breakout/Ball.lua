@@ -5,8 +5,8 @@ const = require 'constants'
 function Ball:init()
     self.image = love.graphics.newImage('Assets/Sprites/ball.png')
 
-    self.width = self.image.getWidth(self.image)
-    self.height = self.image.getHeight(self.image)
+    self.width = self.image.getWidth(self.image) * 1.5
+    self.height = self.image.getHeight(self.image) * 1.5
     
     self.x = const.VIRTUAL_WIDTH / 2 - self.width / 2
     self.y = const.VIRTUAL_HEIGHT / 2 - self.height / 2

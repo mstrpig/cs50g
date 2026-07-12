@@ -5,8 +5,8 @@ const = require 'constants'
 function Paddle:init()
     self.image = love.graphics.newImage('Assets/Sprites/paddle.png')
 
-    self.width = self.image:getWidth()
-    self.height = self.image:getHeight()
+    self.width = self.image:getWidth() * 1.5
+    self.height = self.image:getHeight() * 1.5
 
     self.x = const.VIRTUAL_WIDTH / 2 - self.width / 2
     self.y = const.VIRTUAL_HEIGHT / 1.3 - self.height / 2

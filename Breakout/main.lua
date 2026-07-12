@@ -9,6 +9,8 @@ require 'StateMachines/PlayState'
 
 require 'Paddle'
 require 'Ball'
+require 'Brick'
+require 'LevelMaker'
 
 function love.load()
     math.randomseed(os.clock())
