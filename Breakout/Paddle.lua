@@ -16,9 +16,11 @@ end
 
 function Paddle:update(dt)
     if love.keyboard.isDown('a') then
-        self.x = self.x + self.dx - const.PADDLE_SPEED * dt
+        self.dx = - const.PADDLE_SPEED * dt
+        self.x = self.x + self.dx
         elseif love.keyboard.isDown('d') then
-            self.x = self.x + self.dx + const.PADDLE_SPEED * dt
+            self.dx = const.PADDLE_SPEED * dt
+            self.x = self.x + self.dx
         end
     end
 

@@ -22,15 +22,24 @@ function PlayState:render()
     
     for _, brick in pairs(self.bricks) do
     brick:render()
-end
+    end
 end
 
 function PlayState:collisionWithPaddle(dt)
+    local speedBoost = 8
+    local minSpeed = 50
     if self.ball.x <= self.paddle.x + self.paddle.width
         and self.ball.x + self.ball.width >= self.paddle.x
         and self.ball.y <= self.paddle.y + self.paddle.height
         and self.ball.y + self.ball.height >= self.paddle.y then
             self.ball.dy = - self.ball.dy
+
+            if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
+                self.ball.dx = - minSpeed + - (speedBoost * math.abs(self.paddle.x + self.paddle.width / 2 - self.ball.x))
+
+            elseif self.ball.x > self.paddle.x + (self.paddle.width / 2) and self.paddle.dx > 0 then
+                self.ball.dx = minSpeed + (speedBoost * math.abs(self.paddle.x + self.paddle.width / 2 - self.ball.x))
+            end
     end
 end
 

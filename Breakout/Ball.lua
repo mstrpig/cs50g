@@ -11,7 +11,7 @@ function Ball:init()
     self.x = const.VIRTUAL_WIDTH / 2 - self.width / 2
     self.y = const.VIRTUAL_HEIGHT / 2 - self.height / 2
 
-    self.dx = math.random(2) == 1 and 200 or -200
+    self.dx = math.random(2) == 1 and 300 or -300
     self.dy = math.random(-100, 100)
 end
 
