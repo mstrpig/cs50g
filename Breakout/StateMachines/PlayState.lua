@@ -45,14 +45,17 @@ end
 
 function PlayState:collisionWithWalls(dt)
     if self.ball.x <= 0 then
+        self.ball.x = 0
         self.ball.dx = - self.ball.dx
     end
 
     if self.ball.y <= 0 then
+        self.ball.y = 0
         self.ball.dy = - self.ball.dy
     end
 
     if self.ball.x + self.ball.width >= const.VIRTUAL_WIDTH then
+        self.ball.x = const.VIRTUAL_WIDTH - self.ball.width
         self.ball.dx = - self.ball.dx
     end
 end
