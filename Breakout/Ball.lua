@@ -23,3 +23,22 @@ end
 function Ball:render()
     love.graphics.draw(self.image, self.x, self.y, 0, 1.5, 1.5)
 end
+
+function Ball:collision(paddle, dt)
+    if self.x <= paddle.x + paddle.width 
+    and self.x + self.width >= paddle.x
+    and self.y <= paddle.y + paddle.height
+    and self.y + self.height >= paddle.y then
+
+        local overlapX = math.min(self.x + self.width - paddle.x, paddle.x + paddle.width - self.x)
+        local overlapY = math.min(self.y + self.height - paddle.y, paddle.y + paddle.height - self.y)
+
+        if overlapX < overlapY then
+            self.dx = - self.dx
+        else
+            self.dy = - self.dy
+        end
+        
+        return true
+    end
+end
