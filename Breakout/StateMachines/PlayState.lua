@@ -2,7 +2,7 @@ PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
     self.paddle = Paddle()
-    self.ball = Ball()
+    self.ball = Ball(self.paddle)
     self.bricks = LevelMaker.createMap(1)
 end
 

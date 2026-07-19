@@ -2,17 +2,17 @@ Ball = Class{}
 
 const = require 'constants'
 
-function Ball:init()
+function Ball:init(paddle)
     self.image = love.graphics.newImage('Assets/Sprites/ball.png')
 
     self.width = self.image.getWidth(self.image) * 1.5
     self.height = self.image.getHeight(self.image) * 1.5
     
-    self.x = const.VIRTUAL_WIDTH / 2 - self.width / 2
-    self.y = const.VIRTUAL_HEIGHT / 2 - self.height / 2
+    self.x = paddle.x + paddle.width / 2
+    self.y = paddle.y - self.height
 
-    self.dx = math.random(2) == 1 and 300 or -300
-    self.dy = math.random(-100, 100)
+    self.dx = math.random(2) == 1 and 100 or -100
+    self.dy = math.random(-300, -150)
 end
 
 function Ball:update(dt)
