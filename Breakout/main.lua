@@ -6,6 +6,7 @@ require 'StateMachine'
 require 'StateMachines/BaseState'
 require 'StateMachines/TitleScreenState'
 require 'StateMachines/PlayState'
+require 'StateMachines/ServeState'
 
 require 'Paddle'
 require 'Ball'
@@ -28,7 +29,8 @@ function love.load()
 
     gStateMachine = StateMachine{
         ['title'] = function() return TitleScreenState() end,
-        ['play'] = function() return PlayState() end
+        ['play'] = function() return PlayState() end,
+        ['serve'] = function() return ServeState() end
     }
 
     gStateMachine:change('title')
@@ -39,6 +41,8 @@ function love.load()
     }
 
     background = love.graphics.newImage('Assets/Background/main_bg.png')
+    fullHeart = love.graphics.newImage('Assets/Sprites/fullHeart.png')
+    emptyHeart = love.graphics.newImage('Assets/Sprites/emptyHeart.png')
 end
 
 function love.update(dt)
@@ -62,4 +66,20 @@ function love.keypressed(key)
     end
     
     love.keyboard.keysPressed[key] = true
+end
+
+function renderHearts(hearts)
+    local heartsX = const.VIRTUAL_WIDTH - 70
+    local heartsY = const.VIRTUAL_HEIGHT / 10
+    local heartWidth = fullHeart:getWidth() * 1.5
+
+    for i = 1, hearts do
+        love.graphics.draw(fullHeart, heartsX, heartsY, 0, 1.5, 1.5)
+        heartsX = heartsX + heartWidth
+    end
+
+    for i = 1, 3 - hearts do
+        love.graphics.draw(emptyHeart, heartsX, heartsY, 0, 1.5, 1.5)
+        heartsX = heartsX + heartWidth
+    end
 end

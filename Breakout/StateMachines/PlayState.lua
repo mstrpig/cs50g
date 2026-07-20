@@ -4,6 +4,7 @@ function PlayState:init()
     self.paddle = Paddle()
     self.ball = Ball(self.paddle)
     self.bricks = LevelMaker.createMap(1)
+    self.hearts = 3
 end
 
 function PlayState:update(dt)
@@ -31,6 +32,8 @@ function PlayState:render()
     for _, brick in pairs(self.bricks) do
     brick:render()
     end
+
+    renderHearts(self.hearts)
 end
 
 function PlayState:collisionWithWalls(dt)
@@ -47,6 +50,18 @@ function PlayState:collisionWithWalls(dt)
     if self.ball.x + self.ball.width >= const.VIRTUAL_WIDTH then
         self.ball.x = const.VIRTUAL_WIDTH - self.ball.width
         self.ball.dx = - self.ball.dx
+    end
+
+    if self.ball.y + self.ball.height >= const.VIRTUAL_HEIGHT then
+        self.hearts = self.hearts - 1
+        self.ball.x = self.paddle.x + self.paddle.width / 2
+        self.ball.y = self.paddle.y - self.ball.height
+        gStateMachine:change('serve', {
+            paddle = self.paddle,
+            ball = self.ball,
+            bricks = self.bricks,
+            hearts = self.hearts
+        })
     end
 end
 
@@ -74,5 +89,14 @@ function PlayState:collisionWithBrick(dt)
 
             break
         end
+    end
+end
+
+function PlayState:enter(params)
+    if params then
+        self.paddle = params.paddle
+        self.ball = params.ball
+        self.bricks = params.bricks
+        self.hearts = params.hearts
     end
 end
