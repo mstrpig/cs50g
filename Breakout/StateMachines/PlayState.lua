@@ -56,12 +56,15 @@ function PlayState:collisionWithWalls(dt)
         self.hearts = self.hearts - 1
         self.ball.x = self.paddle.x + self.paddle.width / 2
         self.ball.y = self.paddle.y - self.ball.height
-        gStateMachine:change('serve', {
+        if self.hearts == 0 then
+            gStateMachine:change('lose')
+        else gStateMachine:change('serve', {
             paddle = self.paddle,
             ball = self.ball,
             bricks = self.bricks,
             hearts = self.hearts
         })
+        end
     end
 end
 
