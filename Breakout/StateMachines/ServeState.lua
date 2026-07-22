@@ -6,7 +6,8 @@ function ServeState:update()
             paddle = self.paddle,
             ball = self.ball,
             bricks = self.bricks,
-            hearts = self.hearts
+            hearts = self.hearts,
+            score = self.score
         })
     end
 end
@@ -21,6 +22,10 @@ function ServeState:render()
     end
 
     renderHearts(self.hearts)
+
+    love.graphics.setFont(gFont['small'])
+    love.graphics.setColor(0.1, 0.15, 0.4)
+    love.graphics.printf('Score: ' ..tostring(self.score), 0, const.VIRTUAL_HEIGHT / 10, const.VIRTUAL_WIDTH / 10)
 end
 
 function ServeState:enter(params)
@@ -28,4 +33,5 @@ function ServeState:enter(params)
     self.ball = params.ball
     self.bricks = params.bricks
     self.hearts = params.hearts
+    self.score = params.score
 end

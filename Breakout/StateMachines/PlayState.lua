@@ -5,6 +5,7 @@ function PlayState:init()
     self.ball = Ball(self.paddle)
     self.bricks = LevelMaker.createMap(1)
     self.hearts = 3
+    self.score = 0
 end
 
 function PlayState:update(dt)
@@ -34,6 +35,10 @@ function PlayState:render()
     end
 
     renderHearts(self.hearts)
+
+    love.graphics.setFont(gFont['small'])
+    love.graphics.setColor(0.1, 0.15, 0.4)
+    love.graphics.printf('Score: ' ..tostring(self.score), 0, const.VIRTUAL_HEIGHT / 10, const.VIRTUAL_WIDTH / 10)
 end
 
 function PlayState:collisionWithWalls(dt)
@@ -57,12 +62,13 @@ function PlayState:collisionWithWalls(dt)
         self.ball.x = self.paddle.x + self.paddle.width / 2
         self.ball.y = self.paddle.y - self.ball.height
         if self.hearts == 0 then
-            gStateMachine:change('lose')
+            gStateMachine:change('lose', {score = self.score})
         else gStateMachine:change('serve', {
             paddle = self.paddle,
             ball = self.ball,
             bricks = self.bricks,
-            hearts = self.hearts
+            hearts = self.hearts,
+            score = self.score
         })
         end
     end
@@ -77,6 +83,7 @@ function PlayState:collisionWithBrick(dt)
             and self.ball.y + self.ball.height >= brick.y
         then
             brick:wasHit()
+            self.score = self.score + 10
 
             local dx = math.min(
                 self.ball.x + self.ball.width - brick.x,
@@ -101,5 +108,6 @@ function PlayState:enter(params)
         self.ball = params.ball
         self.bricks = params.bricks
         self.hearts = params.hearts
+        self.score = params.score
     end
 end

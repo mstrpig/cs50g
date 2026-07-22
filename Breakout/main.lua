@@ -39,7 +39,8 @@ function love.load()
 
     gFont = {
         ['large'] = love.graphics.newFont('Assets/Font/font.ttf', 60),
-        ['medium'] = love.graphics.newFont('Assets/Font/font.ttf', 40)
+        ['medium'] = love.graphics.newFont('Assets/Font/font.ttf', 40),
+        ['small'] = love.graphics.newFont('Assets/Font/font.ttf', 20)
     }
 
     background = love.graphics.newImage('Assets/Background/main_bg.png')
