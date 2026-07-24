@@ -59,8 +59,6 @@ function PlayState:collisionWithWalls(dt)
 
     if self.ball.y + self.ball.height >= const.VIRTUAL_HEIGHT then
         self.hearts = self.hearts - 1
-        self.ball.x = self.paddle.x + self.paddle.width / 2
-        self.ball.y = self.paddle.y - self.ball.height
         if self.hearts == 0 then
             gStateMachine:change('lose', {score = self.score})
         else gStateMachine:change('serve', {
