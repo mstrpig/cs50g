@@ -2,7 +2,7 @@ ServeState = Class{__includes = BaseState}
 
 function ServeState:update(dt)
     self.paddle:update(dt)
-    self.ball.x = self.paddle.x + self.paddle.width / 2
+    self.ball.x = self.paddle.x + self.paddle.width / 2 - self.ball.width/2
     self.ball.y = self.paddle.y - self.ball.height
     self.ball.dy = math.random(-300, -150)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then

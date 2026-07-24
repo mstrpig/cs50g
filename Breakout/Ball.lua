@@ -8,7 +8,7 @@ function Ball:init(paddle)
     self.width = self.image.getWidth(self.image) * 1.5
     self.height = self.image.getHeight(self.image) * 1.5
     
-    self.x = paddle.x + paddle.width / 2
+    self.x = paddle.x + paddle.width / 2 - self.width / 2
     self.y = paddle.y - self.height
 
     self.dx = math.random(2) == 1 and 100 or -100
