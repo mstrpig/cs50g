@@ -10,7 +10,7 @@ function LevelMaker.createMap(level)
 
     for y = 1, numRows do
         for x = 1, numCols do
-            b = Brick((x-1) * xOffset + 8 + (13 - numCols) * yOffset, y * yOffset)
+            b = Brick((x-1) * xOffset + (const.VIRTUAL_WIDTH - numCols * xOffset) / 2, y * yOffset)
             table.insert(bricks, b)
         end
     end
