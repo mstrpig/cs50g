@@ -1,6 +1,6 @@
 Brick = Class{}
 
-function Brick:init(x, y)
+function Brick:init(x, y, hitNumber)
     self.image = love.graphics.newImage('Assets/Sprites/brick.png')
 
     self.width = self.image.getWidth(self.image) * 1.5
@@ -10,10 +10,15 @@ function Brick:init(x, y)
     self.y = y
 
     self.onScreen = true
+
+    self.hitNumber = hitNumber
 end
 
 function Brick:wasHit()
-    self.onScreen = false
+    self.hitNumber = self.hitNumber - 1
+    if self.hitNumber == 0 then
+        self.onScreen = false
+    end
 end
 
 function Brick:render()
