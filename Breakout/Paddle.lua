@@ -22,6 +22,8 @@ function Paddle:update(dt)
             self.dx = const.PADDLE_SPEED * dt
             self.x = self.x + self.dx
         end
+
+        self.x = math.max(0, math.min(const.VIRTUAL_WIDTH - self.width, self.x))
     end
 
 function Paddle:render()
