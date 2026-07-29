@@ -6,6 +6,11 @@ function PlayState:init()
     self.bricks = LevelMaker.createMap(1)
     self.hearts = 3
     self.score = 0
+
+    self.sparkleSystem = love.graphics.newParticleSystem(sparkle, 64)
+    self.sparkleSystem:setParticleLifetime(0.5, 1)
+    self.sparkleSystem:setLinearAcceleration(-15, 0, 15, 80)
+    self.sparkleSystem:setEmissionArea('normal', 10, 10)
 end
 
 function PlayState:update(dt)
@@ -23,6 +28,7 @@ function PlayState:update(dt)
 
     self:collisionWithWalls(dt)
     self:collisionWithBrick(dt)
+    self.sparkleSystem:update(dt)
 end
 
 function PlayState:render()
@@ -39,6 +45,9 @@ function PlayState:render()
     love.graphics.setFont(gFont['small'])
     love.graphics.setColor(0.1, 0.15, 0.4)
     love.graphics.printf('Score: ' ..tostring(self.score), 0, const.VIRTUAL_HEIGHT / 10, const.VIRTUAL_WIDTH / 10)
+
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(self.sparkleSystem, 0, 0)
 end
 
 function PlayState:collisionWithWalls(dt)
@@ -82,6 +91,8 @@ function PlayState:collisionWithBrick(dt)
         then
             brick:wasHit()
             self.score = self.score + 10
+            self.sparkleSystem:setPosition(brick.x + brick.width / 2, brick.y + brick.height / 2)
+            self.sparkleSystem:emit(64)
 
             local dx = math.min(
                 self.ball.x + self.ball.width - brick.x,

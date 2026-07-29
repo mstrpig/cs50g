@@ -46,6 +46,7 @@ function love.load()
     background = love.graphics.newImage('Assets/Background/main_bg.png')
     fullHeart = love.graphics.newImage('Assets/Sprites/fullHeart.png')
     emptyHeart = love.graphics.newImage('Assets/Sprites/emptyHeart.png')
+    sparkle = love.graphics.newImage('Assets/Sprites/sparkle.png')
 end
 
 function love.update(dt)
