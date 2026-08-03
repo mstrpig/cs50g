@@ -3,9 +3,10 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
     self.paddle = Paddle()
     self.ball = Ball(self.paddle)
-    self.bricks = LevelMaker.createMap(1)
+    self.bricks = LevelMaker.createMap(0)
     self.hearts = 3
     self.score = 0
+    self.level = 0
 
     self.sparkleSystem = love.graphics.newParticleSystem(sparkle, 64)
     self.sparkleSystem:setParticleLifetime(0.5, 1)
@@ -29,6 +30,16 @@ function PlayState:update(dt)
     self:collisionWithWalls(dt)
     self:collisionWithBrick(dt)
     self.sparkleSystem:update(dt)
+    
+    if self:checkVictory() == true then
+        self.level = self.level + 1
+        gStateMachine:change('victory', {
+            paddle = self.paddle,
+            ball = self.ball,
+            score = self.score,
+            level = self.level
+        })
+    end
 end
 
 function PlayState:render()
@@ -111,12 +122,24 @@ function PlayState:collisionWithBrick(dt)
     end
 end
 
+function PlayState:checkVictory()
+    for _, brick in pairs(self.bricks) do
+        if brick.onScreen then
+            return false
+        end
+    end
+
+    return true
+
+end
+
 function PlayState:enter(params)
     if params then
         self.paddle = params.paddle
         self.ball = params.ball
-        self.bricks = params.bricks
-        self.hearts = params.hearts
-        self.score = params.score
+        self.bricks = params.bricks or LevelMaker.createMap(self.level)
+        self.hearts = params.hearts or 3
+        self.score = params.score or 0
+        self.level = params.level or 1
     end
 end

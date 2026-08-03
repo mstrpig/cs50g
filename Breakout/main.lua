@@ -8,6 +8,7 @@ require 'StateMachines/TitleScreenState'
 require 'StateMachines/PlayState'
 require 'StateMachines/ServeState'
 require 'StateMachines/GameOverState'
+require 'StateMachines/VictoryState'
 
 require 'Paddle'
 require 'Ball'
@@ -32,7 +33,8 @@ function love.load()
         ['title'] = function() return TitleScreenState() end,
         ['play'] = function() return PlayState() end,
         ['serve'] = function() return ServeState() end,
-        ['lose'] = function() return GameOverState() end
+        ['lose'] = function() return GameOverState() end,
+        ['victory'] = function() return VictoryState() end
     }
 
     gStateMachine:change('title')
