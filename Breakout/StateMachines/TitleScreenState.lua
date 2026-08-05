@@ -11,6 +11,8 @@ function TitleScreenState:update(dt)
 
     if highlighted == 1 and love.keyboard.wasPressed('return') then
         gStateMachine:change('play')
+    elseif highlighted == 2 and love.keyboard.wasPressed('return') then
+        gStateMachine:change('scores')
     end
 end
 

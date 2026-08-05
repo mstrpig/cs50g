@@ -9,6 +9,7 @@ require 'StateMachines/PlayState'
 require 'StateMachines/ServeState'
 require 'StateMachines/GameOverState'
 require 'StateMachines/VictoryState'
+require 'StateMachines/HighScoresState'
 
 require 'Paddle'
 require 'Ball'
@@ -34,7 +35,8 @@ function love.load()
         ['play'] = function() return PlayState() end,
         ['serve'] = function() return ServeState() end,
         ['lose'] = function() return GameOverState() end,
-        ['victory'] = function() return VictoryState() end
+        ['victory'] = function() return VictoryState() end,
+        ['scores'] = function() return HighScoresState() end
     }
 
     gStateMachine:change('title')
@@ -88,4 +90,42 @@ function renderHearts(hearts)
         love.graphics.draw(emptyHeart, heartsX, heartsY, 0, 1.5, 1.5)
         heartsX = heartsX + heartWidth
     end
+end
+
+function loadHighScores()
+    love.filesystem.setIdentity('Breakout')
+
+    if not love.filesystem.getInfo('Breakout.lst') then
+        local scores = ''
+        for i = 10, 1, -1 do
+            scores = scores .. 'STR\n'
+            scores = scores .. tostring(i * 1000) .. '\n'
+        end
+        
+        love.filesystem.write('Breakout.lst', scores)
+    
+    end
+
+    local name = true
+    local counter = 1
+    local scores = {}
+
+    for i = 1, 10 do
+        scores[i] = {name = nil, score = nil}
+    end
+
+    for line in love.filesystem.lines('Breakout.lst') do
+        if name then 
+            scores[counter].name = string.sub(line, 1, 3)
+        else
+            scores[counter].score = tonumber(line)
+            counter = counter + 1
+        end
+
+        name = not name
+
+    end
+
+    return scores
+
 end
