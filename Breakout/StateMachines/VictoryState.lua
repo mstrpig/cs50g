@@ -5,13 +5,23 @@ function VictoryState:update(dt)
         self.ball.x = self.paddle.x + self.paddle.width / 2 - self.ball.width/2
         self.ball.y = self.paddle.y - self.ball.height
         self.ball.dy = math.random(-300, -150)
-        gStateMachine:change('play', {
-            paddle = self.paddle,
-            ball = self.ball,
-            hearts = 3,
-            score = 0,
-            level = self.level
-        })
+        
+        if scoreQualifies(self.score) then
+            gStateMachine:change('enroll', {
+                paddle = self.paddle,
+                ball = self.ball,
+                score = self.score,
+                level = self.level
+            })
+            else gStateMachine:change('play', {
+                paddle = self.paddle,
+                ball = self.ball,
+                hearts = 3,
+                score = 0,
+                level = self.level
+            })
+
+        end
     end
 end
 

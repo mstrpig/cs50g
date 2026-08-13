@@ -10,6 +10,7 @@ require 'StateMachines/ServeState'
 require 'StateMachines/GameOverState'
 require 'StateMachines/VictoryState'
 require 'StateMachines/HighScoresState'
+require 'StateMachines/EnrolScoreState'
 
 require 'Paddle'
 require 'Ball'
@@ -36,7 +37,8 @@ function love.load()
         ['serve'] = function() return ServeState() end,
         ['lose'] = function() return GameOverState() end,
         ['victory'] = function() return VictoryState() end,
-        ['scores'] = function() return HighScoresState() end
+        ['scores'] = function() return HighScoresState() end,
+        ['enroll'] = function() return EnrolScoreState() end
     }
 
     gStateMachine:change('title')
@@ -99,7 +101,7 @@ function loadHighScores()
         local scores = ''
         for i = 10, 1, -1 do
             scores = scores .. 'STR\n'
-            scores = scores .. tostring(i * 1000) .. '\n'
+            scores = scores .. tostring(i * 0) .. '\n'
         end
         
         love.filesystem.write('Breakout.lst', scores)
@@ -128,4 +130,31 @@ function loadHighScores()
 
     return scores
 
+end
+
+function scoreQualifies(score)
+    local scores = loadHighScores()
+    local lowest = math.huge
+    for i = 1, 10 do
+        local s = scores[i].score
+        if s == nil then return true end
+        lowest = math.min(lowest, s)
+    end
+
+    return score > lowest
+
+end
+
+function saveHighScore(name, score)
+    local scores = loadHighScores()
+
+    table.insert(scores, {name = name, score = score})
+    table.sort(scores, function(a, b) return (a.score or -1) > (b.score or -1) end)
+    while #scores > 10 do table.remove(scores) end
+
+    local data = ''
+    for i = 1, 10 do
+        data = data .. scores[i].name .. '\n' .. tostring(scores[i].score) .. '\n'
+    end
+    love.filesystem.write('Breakout.lst', data)
 end
