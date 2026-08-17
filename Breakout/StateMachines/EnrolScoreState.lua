@@ -8,12 +8,14 @@ end
 
 function EnrolScoreState:update(dt)
     if love.keyboard.wasPressed('up') then
+        gSounds['letter_change']:play()
         self.letters[self.highlightedLetter] = self.letters[self.highlightedLetter] + 1
         if self.letters[self.highlightedLetter] > 90 then
             self.letters[self.highlightedLetter] = 65
         end
         
     elseif love.keyboard.wasPressed('down') then
+        gSounds['letter_change']:play()
         self.letters[self.highlightedLetter] = self.letters[self.highlightedLetter] - 1
         if self.letters[self.highlightedLetter] < 65 then
             self.letters[self.highlightedLetter] = 90

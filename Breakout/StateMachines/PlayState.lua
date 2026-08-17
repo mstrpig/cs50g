@@ -19,6 +19,7 @@ function PlayState:update(dt)
     self.ball:update(dt)
 
     if self.ball:collision(self.paddle, dt) then
+        gSounds['ball_hit_paddle_and_walls']:play()
         if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
         self.ball.dx = -50 + -(8 * (self.paddle.x + self.paddle.width / 2 - self.ball.x))
 
@@ -32,6 +33,7 @@ function PlayState:update(dt)
     self.sparkleSystem:update(dt)
     
     if self:checkVictory() == true then
+        gSound['win']:play()
         self.level = self.level + 1
         gStateMachine:change('victory', {
             paddle = self.paddle,
@@ -63,16 +65,19 @@ end
 
 function PlayState:collisionWithWalls(dt)
     if self.ball.x <= 0 then
+        gSounds['ball_hit_paddle_and_walls']:play()
         self.ball.x = 0
         self.ball.dx = - self.ball.dx
     end
 
     if self.ball.y <= 0 then
+        gSounds['ball_hit_paddle_and_walls']:play()
         self.ball.y = 0
         self.ball.dy = - self.ball.dy
     end
 
     if self.ball.x + self.ball.width >= const.VIRTUAL_WIDTH then
+        gSounds['ball_hit_paddle_and_walls']:play()
         self.ball.x = const.VIRTUAL_WIDTH - self.ball.width
         self.ball.dx = - self.ball.dx
     end
@@ -80,6 +85,7 @@ function PlayState:collisionWithWalls(dt)
     if self.ball.y + self.ball.height >= const.VIRTUAL_HEIGHT then
         self.hearts = self.hearts - 1
         if self.hearts == 0 then
+            gSounds['lose']:play()
             gStateMachine:change('lose', {score = self.score})
         else gStateMachine:change('serve', {
             paddle = self.paddle,
@@ -101,6 +107,7 @@ function PlayState:collisionWithBrick(dt)
             and self.ball.y + self.ball.height >= brick.y
         then
             brick:wasHit()
+            gSounds['ball_hit_brick']:play()
             self.score = self.score + 10
             self.sparkleSystem:setPosition(brick.x + brick.width / 2, brick.y + brick.height / 2)
             self.sparkleSystem:emit(64)

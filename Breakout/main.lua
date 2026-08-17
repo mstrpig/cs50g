@@ -49,6 +49,14 @@ function love.load()
         ['small'] = love.graphics.newFont('Assets/Font/font.ttf', 20)
     }
 
+    gSounds = {
+        ['ball_hit_brick'] = love.audio.newSource('Assets/Sounds/ball_hit_brick.wav', 'static'),
+        ['ball_hit_paddle_and_walls'] = love.audio.newSource('Assets/Sounds/ball_hit_paddle_and_walls.wav', 'static'),
+        ['lose'] = love.audio.newSource('Assets/Sounds/lose.wav', 'static'),
+        ['win'] = love.audio.newSource('Assets/Sounds/win.wav', 'static'),
+        ['letter_change'] = love.audio.newSource('Assets/Sounds/letter_change.wav', 'static')
+    }
+
     background = love.graphics.newImage('Assets/Background/main_bg.png')
     fullHeart = love.graphics.newImage('Assets/Sprites/fullHeart.png')
     emptyHeart = love.graphics.newImage('Assets/Sprites/emptyHeart.png')
