@@ -18,7 +18,7 @@ function PlayState:update(dt)
     self.paddle:update(dt)
     self.ball:update(dt)
 
-    if self.ball:collision(self.paddle, dt) then
+    if self.ball:collisionWithPaddle(self.paddle) then
         gSounds['ball_hit_paddle_and_walls']:play()
         if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
         self.ball.dx = -50 + -(8 * (self.paddle.x + self.paddle.width / 2 - self.ball.x))
@@ -28,12 +28,12 @@ function PlayState:update(dt)
         end
     end
 
-    self:collisionWithWalls(dt)
-    self:collisionWithBrick(dt)
+    self:collisionWithWalls()
+    self:collisionWithBricks()
     self.sparkleSystem:update(dt)
     
     if self:checkVictory() == true then
-        gSound['win']:play()
+        gSounds['win']:play()
         self.level = self.level + 1
         gStateMachine:change('victory', {
             paddle = self.paddle,
@@ -63,7 +63,7 @@ function PlayState:render()
     love.graphics.draw(self.sparkleSystem, 0, 0)
 end
 
-function PlayState:collisionWithWalls(dt)
+function PlayState:collisionWithWalls()
     if self.ball.x <= 0 then
         gSounds['ball_hit_paddle_and_walls']:play()
         self.ball.x = 0
@@ -98,32 +98,14 @@ function PlayState:collisionWithWalls(dt)
     end
 end
 
-function PlayState:collisionWithBrick(dt)
+function PlayState:collisionWithBricks()
     for _, brick in pairs(self.bricks) do
-        if brick.onScreen
-            and self.ball.x <= brick.x + brick.width
-            and self.ball.x + self.ball.width >= brick.x
-            and self.ball.y <= brick.y + brick.height
-            and self.ball.y + self.ball.height >= brick.y
-        then
+        if brick.onScreen and self.ball:collisionWithBrick(brick) then
             brick:wasHit()
             gSounds['ball_hit_brick']:play()
             self.score = self.score + 10
             self.sparkleSystem:setPosition(brick.x + brick.width / 2, brick.y + brick.height / 2)
             self.sparkleSystem:emit(64)
-
-            local dx = math.min(
-                self.ball.x + self.ball.width - brick.x,
-                brick.x + brick.width - self.ball.x
-            )
-            local dy = math.min(
-                self.ball.y + self.ball.height - brick.y,
-                brick.y + brick.height - self.ball.y
-            )
-
-            if dx < dy then self.ball.dx = -self.ball.dx
-            else self.ball.dy = -self.ball.dy end
-
             break
         end
     end
