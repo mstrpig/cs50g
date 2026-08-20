@@ -11,8 +11,10 @@ function LevelMaker.createMap(level)
     for y = 1, numRows do
         for x = 1, numCols do
             local hitNumber = (numRows - y + 1) + level
-            b = Brick((x-1) * xOffset + (const.VIRTUAL_WIDTH - numCols * xOffset) / 2, y * yOffset, hitNumber)
-            table.insert(bricks, b)
+            if math.random(1, 10) > 3 then
+                b = Brick((x-1) * xOffset + (const.VIRTUAL_WIDTH - numCols * xOffset) / 2, y * yOffset, hitNumber)
+                table.insert(bricks, b)
+            end
         end
     end
     
